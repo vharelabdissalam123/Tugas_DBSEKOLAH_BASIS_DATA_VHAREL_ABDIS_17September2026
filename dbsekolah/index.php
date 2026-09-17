@@ -1,7 +1,7 @@
 <?php
 include "koneksi.php";
 
-// Ambil kata kunci pencarian jika ada
+
 $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : "";
 
 if ($keyword != "") {
