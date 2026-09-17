@@ -1,7 +1,7 @@
 <?php
 include "koneksi.php";
 
-
+// Ambil kata kunci pencarian jika ada
 $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : "";
 
 if ($keyword != "") {
@@ -26,6 +26,7 @@ $result = mysqli_query($koneksi, $query);
 
     <h2>Data Siswa</h2>
 
+    <!-- Form pencarian -->
     <form method="GET" action="index.php">
         <input type="text" name="keyword" placeholder="Cari nama / nis / kelas / jurusan" value="<?php echo htmlspecialchars($keyword); ?>">
         <button type="submit">Cari</button>
@@ -34,11 +35,12 @@ $result = mysqli_query($koneksi, $query);
 
     <br>
 
-   
+    <!-- Link ke halaman tambah data -->
     <a href="tambah.php">Tambah Data Siswa</a>
 
     <br><br>
 
+    <!-- Tabel data siswa -->
     <table border="1" cellpadding="5" cellspacing="0">
         <tr>
             <th>No</th>
@@ -46,6 +48,7 @@ $result = mysqli_query($koneksi, $query);
             <th>Nama</th>
             <th>Kelas</th>
             <th>Jurusan</th>
+            <th>Aksi</th>
         </tr>
 
         <?php
@@ -58,10 +61,14 @@ $result = mysqli_query($koneksi, $query);
                 echo "<td>" . htmlspecialchars($row['nama']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['kelas']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['jurusan']) . "</td>";
+                echo "<td>";
+                echo "<a href='edit.php?id=" . $row['id_siswa'] . "'>Edit</a> | ";
+                echo "<a href='hapus.php?id=" . $row['id_siswa'] . "' onclick=\"return confirm('Yakin ingin menghapus data ini?')\">Hapus</a>";
+                echo "</td>";
                 echo "</tr>";
             }
         } else {
-            echo "<tr><td colspan='5'>Data tidak ditemukan</td></tr>";
+            echo "<tr><td colspan='6'>Data tidak ditemukan</td></tr>";
         }
         ?>
     </table>
